@@ -1,0 +1,67 @@
+.ant-modal-content {
+  border-radius: 0px !important;
+  padding: 0px !important;
+}
+
+.ant-modal-close-icon {
+  background-color: white !important;
+  padding: 3px;
+  border-radius: 100%;
+  color: inherit !important;
+  font-weight: bold;
+}
+
+.icon-info {
+  color: #0067b9 !important;
+}
+
+.icon-success {
+  color: #00a65a !important;
+}
+
+.icon-warning {
+  color: #f39c12 !important;
+}
+
+.icon-danger {
+  color: #fd0c0b !important;
+}
+
+.ant-modal-header {
+  padding: 1rem;
+  border-radius: 0px !important;
+}
+
+.modal-info {
+  background: #0067b9 !important;
+}
+
+.modal-success {
+  background-color: #00a65a !important;
+}
+
+.modal-warning {
+  background-color: #f39c12 !important;
+}
+
+.modal-danger {
+  background-color: #fd0c0b !important;
+}
+
+.ant-modal-title {
+  color: white !important;
+}
+
+.ant-modal-body {
+  padding: 1rem !important;
+}
+
+.ant-modal-footer {
+  padding: 10px 20px !important;
+}
+
+.btnSuccess {
+  background-color: #218838 !important;
+  color: white !important;
+  border-color: #218838 !important;
+}

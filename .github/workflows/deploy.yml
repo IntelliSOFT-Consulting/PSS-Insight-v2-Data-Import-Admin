@@ -1,0 +1,49 @@
+name: Deploy app to International instance
+
+on:
+  push:
+    branches: ['main']
+    paths:
+      - 'src/**'
+      - 'd2.config.js'
+      - 'public/**'
+  pull_request:
+    branches: ['main']
+    paths:
+      - 'src/**'
+      - 'd2.config.js'
+      - 'public/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Cache Yarn dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/yarn
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Build app
+        run: yarn build
+
+      - name: Deploy app
+        env:
+          D2_URL: ${{ secrets.DHIS2_URL }}
+          D2_PASSWORD: ${{ secrets.DHIS2_PASSWORD }}
+          D2_USERNAME: ${{ secrets.DHIS2_USERNAME }}
+        run: yarn deploy $D2_URL --username $D2_USERNAME --password $D2_PASSWORD

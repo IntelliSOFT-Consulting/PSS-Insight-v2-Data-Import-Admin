@@ -1,0 +1,53 @@
+[
+  {
+    "label": "SI_Mean % availability across a basket of medicines -- Public",
+    "id": "RpjFploE34K",
+    "value": "MDG_0000000010"
+  },
+  {
+    "label": "SI_% of population with household spending on health greater than 25% of total household budget for both primary and secondary indicators Vs Year",
+    "id": "EfWMltXQj74",
+    "value": "FINPROTECTION_CATA_TOT_25_LEVEL_SH"
+  },
+  {
+    "label": "SI_Median (consumer) drug price ratio for tracer medicines in the public, private, and mission sectors -- Private",
+    "id": "udLEvrUP9Xn",
+    "value": "WHS6_116"
+  },
+
+  {
+    "label": "SI_Median (consumer) drug price ratio for tracer medicines in the public, private, and mission sectors -- Public",
+    "id": "t2OPKtMYVnV",
+    "value": "MDG_0000000011"
+  },
+  {
+    "label": "SI_%UHC Service Coverage Index",
+    "id": "sHiOCAIdhPP",
+    "value": "UHC_INDEX_REPORTED"
+  },
+  {
+    "label": "SI_Mean % availability across a basket of medicines -- Private",
+    "id": "WSkctfepxfF",
+    "value": "WHS6_101"
+  },
+  {
+    "label": "Population per licensed pharmacist, pharmacy technician, or pharmacy assistant",
+    "id": "I42gfSlXwbI",
+    "value": "HWF_0015"
+  },
+  {
+    "label": "HR02_pharmacists-(per-10-000-population)",
+    "id": "pIS3jcdWfFE",
+    "value": "HWF_0014"
+  },
+  {
+    "label": "Proportion of health facilities that have a core set of relevant essential medicines available and affordable on a sustainable basis. (SDG indicator 3.b.3)",
+    "id": "ZuP5LRjzgc7",
+    "value": "SDGHEALTHFACILITIESESSENTIALMEDS"
+  },
+  {
+    "label": "Proportion of population with large household expenditure on health as a share of total household expenditure or income. (SDG indicator 3.8.2)",
+    "id": "b0iJmev8OZv",
+    "value": "FINPROTECTION_CATA_TOT_25_POP"
+  }
+]

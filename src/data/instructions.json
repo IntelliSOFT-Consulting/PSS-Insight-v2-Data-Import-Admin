@@ -1,0 +1,18 @@
+[
+  {
+    "title": "Download the CSV Template",
+    "description": "Locate the download link or button for the CV template provided. Click on the link or button to start the download process. Save the file to a location on your computer where you can easily access it later."
+  },
+  {
+    "title": "Open the CSV Template",
+    "description": "Navigate to the location where you saved the CV template file. Double-click on the file to open it. The file will typically open in a spreadsheet application like Microsoft Excel or Google Sheets."
+  },
+  {
+    "title": "Understand the Template Structure",
+    "description": "Take a moment to familiarise yourself with the structure and layout of the CV template. The template may contain column headers that define the type of data to be entered in each column. It may also include example data or instructions in certain cells to guide you in filling out the template correctly."
+  },
+  {
+    "title": "Fill in the Data",
+    "description": "Starting from the first row below the column headers, enter your data into the appropriate columns. Ensure that you follow any specific formatting instructions provided in the template. For example, you may need to enter dates in a certain format or use a specific currency symbol. Be mindful of any data validation rules or constraints mentioned in the template. For instance, some columns may only accept numeric values or restrict the input to a predefined list of options."
+  }
+]

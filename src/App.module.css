@@ -1,0 +1,8 @@
+@font-face {
+  font-family: 'Gill Sans'; /* Name the font family */
+  src: url('./assets/fonts/GILLSANS.woff') format('woff');
+}
+
+* {
+  font-family: 'Gill Sans', sans-serif !important;
+}
