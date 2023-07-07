@@ -152,7 +152,7 @@ const generateTemplate = (indicators, dataElements, orgUnits) => {
         validation.error =
           'Please enter a valid year (data entry for future years and duplicates are not allowed)';
       } else {
-        if (flattenedData[index - 1].valueType === 'NUMBER') {
+        if (flattenedData[index - 1]?.valueType === 'NUMBER') {
           validation = {
             type: 'custom',
             allowBlank: true,
@@ -162,7 +162,7 @@ const generateTemplate = (indicators, dataElements, orgUnits) => {
             errorTitle: 'Invalid Value',
             error: 'Please enter a valid value',
           };
-        } else if (flattenedData[index - 1].valueType === 'BOOLEAN') {
+        } else if (flattenedData[index - 1]?.valueType === 'BOOLEAN') {
           validation = {
             type: 'list',
             allowBlank: true,
