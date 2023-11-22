@@ -1,9 +1,9 @@
-import axios from 'axios';
-import delay from './delay';
+import axios from "axios";
+import delay from "./delay";
 
 const gho = axios.create({
-  baseURL: 'http://172.104.91.116:7009/api/v1/redirect/',
-  headers: { 'Content-Type': 'application/json' },
+  baseURL: process.env.REACT_APP_SERVER_URL + "/api/v1/redirect/",
+  headers: { "Content-Type": "application/json" },
 });
 export const getIndicators = async (indicators, countryCode) => {
   const indicatorCodes = await Promise.all(
