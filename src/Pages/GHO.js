@@ -93,7 +93,7 @@ export default function GHO({ data: { orgUnits } }) {
     const indicator = localIndicators.find(({ value: v }) => v === value);
     return indicator?.id;
   };
-  console.log('Country: ', country);
+
   const handleImport = async values => {
     try {
       setLoading(true);

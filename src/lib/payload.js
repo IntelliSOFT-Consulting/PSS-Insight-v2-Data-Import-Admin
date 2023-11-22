@@ -4,7 +4,6 @@ export const createPayload = (jsonData, dataElements, programs) => {
   const payload = [];
   for (const row of jsonData) {
     const dataValues = [];
-    console.log('row: ', row);
     for (const [key, value] of Object.entries(row)) {
       if (key !== 'reportingYear') {
         const dataElement = dataElements.find(element => element.code === key);

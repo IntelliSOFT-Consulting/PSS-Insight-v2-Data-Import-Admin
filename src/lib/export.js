@@ -52,8 +52,6 @@ export const formatDataElements = (
             ? 'No'
             : dataValue.value;
 
-        console.log('dataItem: ', dataItem);
-        console.log('benchmarks: ', benchmarks);
         dataValues[`${dataItem?.code} National Target`] = null;
         dataValues[`${dataItem?.code} International Benchmark`] =
           benchmarks?.find(benchmark => benchmark.name?.includes(dataItem?.code))
@@ -117,7 +115,6 @@ export const formatColumns = (indicators, dataElements) => {
 
 export const createExport = (indicators, dataElements, events) => {
   try {
-    console.log('events: ', events);
     const header1 = [
       {
         header: '',
