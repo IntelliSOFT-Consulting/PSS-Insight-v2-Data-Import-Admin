@@ -8,7 +8,7 @@ import { createUseStyles } from 'react-jss';
 import { CloudDownloadOutlined } from '@ant-design/icons';
 import { saveAs } from 'file-saver';
 import ExcelJS from 'exceljs';
-import { fi } from 'date-fns/locale';
+import useBenchmarks from "../hooks/useBenchmarks";
 
 const { RangePicker } = DatePicker;
 
@@ -85,6 +85,8 @@ export default function Export({
   const [filteredElements, setFilteredElements] = useState([]);
   const [filteredIndicators, setFilteredIndicators] = useState([]);
 
+  const { dataValues } = useBenchmarks();
+
   useEffect(() => {
     if (dataElements && indicators) {
       const filtered = dataElements?.dataElements?.filter(
@@ -133,7 +135,7 @@ export default function Export({
         filteredIndicators,
         filteredElements,
         data?.instances,
-        benchmarks
+        dataValues
       );
 
       setHeaders(formattedDataElements?.headers);

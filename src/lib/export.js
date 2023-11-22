@@ -52,9 +52,11 @@ export const formatDataElements = (
             ? 'No'
             : dataValue.value;
 
+        console.log('dataItem: ', dataItem);
+        console.log('benchmarks: ', benchmarks);
         dataValues[`${dataItem?.code} National Target`] = null;
         dataValues[`${dataItem?.code} International Benchmark`] =
-          benchmarks?.find(benchmark => benchmark.name === dataItem?.code)
+          benchmarks?.find(benchmark => benchmark.name?.includes(dataItem?.code))
             ?.value || 0;
       }
     }

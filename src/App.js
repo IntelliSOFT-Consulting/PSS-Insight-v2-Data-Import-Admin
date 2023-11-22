@@ -52,7 +52,8 @@ const query = {
     params: ({ page }) => ({
       order: 'code:asc, formName:asc, valueType:asc, id:asc',
       fields: 'id,code,formName,valueType,displayName,programStages[id]',
-      pageSize: 5000,
+      filter: 'name:ilike:pss',
+      pageSize: 1,
     }),
   },
   orgUnits: {

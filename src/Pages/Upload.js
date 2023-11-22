@@ -1,44 +1,44 @@
-import React, { useState, useEffect } from 'react';
-import Card from '../components/Card';
-import { Upload, Button, Popconfirm } from 'antd';
-import { createUseStyles } from 'react-jss';
-import Sheet from 'sheet-happens';
-import { read, utils } from 'xlsx';
-import Notification from '../components/Notification';
-import { dataToJson, getErrors } from '../lib/validate';
-import { createPayload } from '../lib/payload';
-import { useDataMutation, useDataQuery } from '@dhis2/app-runtime';
-import Loader from '../components/Loader';
+import React, { useState, useEffect } from "react";
+import Card from "../components/Card";
+import { Upload, Button, Popconfirm } from "antd";
+import { createUseStyles } from "react-jss";
+import Sheet from "sheet-happens";
+import { read, utils } from "xlsx";
+import Notification from "../components/Notification";
+import { dataToJson, getErrors } from "../lib/validate";
+import { createPayload } from "../lib/payload";
+import { useDataMutation, useDataQuery } from "@dhis2/app-runtime";
+import Loader from "../components/Loader";
 
 const useStyles = createUseStyles({
   button: {
-    backgroundColor: '#002F6C',
-    color: 'white',
-    borderRadius: '5px',
-    border: 'none',
-    cursor: 'pointer',
-    '&:hover': {
-      backgroundColor: '#005DA5',
-      color: 'white !',
-      '& > span': {
-        color: 'white !important',
+    backgroundColor: "#002F6C",
+    color: "white",
+    borderRadius: "5px",
+    border: "none",
+    cursor: "pointer",
+    "&:hover": {
+      backgroundColor: "#005DA5",
+      color: "white !",
+      "& > span": {
+        color: "white !important",
       },
     },
   },
   uploadSection: {
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: '1rem',
-    '& .ant-upload-list': {
-      width: 'fit-content !important',
+    display: "flex",
+    flexDirection: "column",
+    marginBottom: "1rem",
+    "& .ant-upload-list": {
+      width: "fit-content !important",
     },
   },
   footer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    width: '100%',
-    '& > button': {
-      marginLeft: '10px',
+    display: "flex",
+    justifyContent: "flex-end",
+    width: "100%",
+    "& > button": {
+      marginLeft: "10px",
     },
   },
 });
@@ -48,16 +48,16 @@ export default function UploadTemplate({
 }) {
   const [file, setFile] = useState(null);
   const [data, setData] = useState(null);
-  const [errors, setErrors] = useState([['Row No.', 'Column', 'Error']]);
+  const [errors, setErrors] = useState([["Row No.", "Column", "Error"]]);
   const [alert, setAlert] = useState(null);
   const [valid, setValid] = useState(false);
   const [jsonDatas, setJsonDatas] = useState(null);
 
   const classes = useStyles();
   const uploadFile = ({ file, onSuccess, onError, onProgress }) => {
-    setErrors([['Row No.', 'Column', 'Error']]);
+    setErrors([["Row No.", "Column", "Error"]]);
     setFile(file);
-    onSuccess('ok');
+    onSuccess("ok");
   };
 
   // get the past events for the current org unit and program
@@ -68,12 +68,12 @@ export default function UploadTemplate({
     refetch: refetchEvents,
   } = useDataQuery({
     events: {
-      resource: 'tracker/events',
+      resource: "tracker/events",
       params: ({ page }) => ({
         program: programs.programs[0].id,
         // orgUnit: me.organisationUnits[0].id,
         pageSize: 20000,
-        fields: 'id,dataValues,occurredAt,event,orgUnit',
+        fields: "id,dataValues,occurredAt,event,orgUnit",
       }),
     },
   });
@@ -82,18 +82,18 @@ export default function UploadTemplate({
     if (file) {
       const reader = new FileReader();
       reader.readAsBinaryString(file);
-      reader.onload = e => {
+      reader.onload = (e) => {
         const bstr = e.target.result;
-        const wb = read(bstr, { type: 'binary' });
+        const wb = read(bstr, { type: "binary" });
         const wsname = wb.SheetNames[0];
         const ws = wb.Sheets[wsname];
         const datas = utils.sheet_to_json(ws, { header: 1 });
         console.log(datas[1][0]);
-        if (datas[1][0] !== 'Organisation Unit') {
+        if (datas[1][0] !== "Organisation Unit") {
           setAlert({
-            status: 'error',
-            message: 'Invalid template file',
-            description: 'Please upload a valid template file',
+            status: "error",
+            message: "Invalid template file",
+            description: "Please upload a valid template file",
             onClose: () => setAlert(null),
           });
           return;
@@ -104,13 +104,13 @@ export default function UploadTemplate({
   }, [file]);
 
   const props = {
-    name: 'file',
+    name: "file",
     customRequest: uploadFile,
-    accept: '.xlsx, .xls, .csv',
+    accept: ".xlsx, .xls, .csv",
     maxCount: 1,
     onRemove: () => {
       setData(null);
-      setErrors([['Row No.', 'Column', 'Error']]);
+      setErrors([["Row No.", "Column", "Error"]]);
       setFile(null);
     },
   };
@@ -135,16 +135,16 @@ export default function UploadTemplate({
     if (validationErrors.length > 0) {
       setErrors([...errors, ...validationErrors]);
       setAlert({
-        status: 'error',
+        status: "error",
         message:
-          'Errors have been found in the template. Please fix the errors and try again.',
+          "Errors have been found in the template. Please fix the errors and try again.",
         onClose: () => setAlert(null),
       });
     } else {
       refetchEvents();
       setAlert({
-        status: 'success',
-        message: 'No errors found in the template.',
+        status: "success",
+        message: "No errors found in the template.",
         onClose: () => setAlert(null),
       });
 
@@ -156,18 +156,18 @@ export default function UploadTemplate({
     }
   };
 
-  const deepFlatten = arr =>
-    [].concat(...arr.map(v => (Array.isArray(v) ? deepFlatten(v) : v)));
+  const deepFlatten = (arr) =>
+    [].concat(...arr.map((v) => (Array.isArray(v) ? deepFlatten(v) : v)));
 
-  const lengthToPixels = length => {
+  const lengthToPixels = (length) => {
     const pixelsPerCharacter = 6;
     const pixelsPerCellPadding = 10;
     return length * pixelsPerCharacter + pixelsPerCellPadding;
   };
 
-  const getlongest = arr => {
-    const col2 = deepFlatten(arr.map(row => row[1]));
-    const col3 = deepFlatten(arr.map(row => row[2]));
+  const getlongest = (arr) => {
+    const col2 = deepFlatten(arr.map((row) => row[1]));
+    const col3 = deepFlatten(arr.map((row) => row[2]));
 
     const longest2 = col2.reduce((a, b) =>
       a?.length > b?.length ? a : b
@@ -180,38 +180,40 @@ export default function UploadTemplate({
   };
 
   const mutation = {
-    resource: 'tracker',
-    type: 'create',
-    params: _data => ({
-      async: 'false',
-      importStrategy: 'CREATE_AND_UPDATE',
+    resource: "tracker",
+    type: "create",
+    params: (_data) => ({
+      async: "false",
+      importStrategy: "CREATE_AND_UPDATE",
     }),
 
-    data: _data => {
+    data: (_data) => {
       return { events: Object.values(_data) };
     },
   };
 
   const [mutate, { loading: mutationLoading, error: mutationError }] =
     useDataMutation(mutation, {
-      onComplete: _data => {
+      onComplete: (_data) => {
         const { created, updated, ignored } = _data.stats;
         setAlert({
-          status: 'success',
+          status: "success",
           message: `Successfully imported ${created} events and updated ${updated} events. ${ignored} events were ignored.`,
           onClose: () => setAlert(null),
         });
-        console.log('_data', _data);
         setData(null);
-        setErrors([['Row No.', 'Column', 'Error']]);
+        setErrors([["Row No.", "Column", "Error"]]);
         setFile(null);
         setJsonDatas(null);
         setValid(false);
+        setTimeout(() => {
+          setAlert(null);
+        }, 3000);
       },
-      onError: error => {
+      onError: (error) => {
         setAlert({
-          status: 'error',
-          message: 'An error occurred while importing data',
+          status: "error",
+          message: "An error occurred while importing data",
           onClose: () => setAlert(null),
         });
       },
@@ -224,9 +226,9 @@ export default function UploadTemplate({
       programs?.programs
     );
 
-    const updatedEventsWithId = payload.map(item => {
+    const updatedEventsWithId = payload.map((item) => {
       const event = dataEvents?.events?.instances?.find(
-        event =>
+        (event) =>
           event.occurredAt === item.occurredAt && event.orgUnit === item.orgUnit
       );
       if (event) {
@@ -241,7 +243,7 @@ export default function UploadTemplate({
   const footer = (
     <div className={classes.footer}>
       <Button
-        type='primary'
+        type="primary"
         className={classes.button}
         onClick={() => {
           handleValidate();
@@ -250,21 +252,23 @@ export default function UploadTemplate({
       >
         Validate
       </Button>
-      <Popconfirm
-        title='If you proceed, the existing data for the same reporting year will be replaced. Are you certain you want to continue?'
-        onConfirm={handleSubmit}
-        okText='Yes'
-        cancelText='No'
-        disabled={!valid}
-      >
-        <Button type='primary' disabled={!valid} className={classes.button}>
-          Submit
-        </Button>
-      </Popconfirm>
+      {valid && (
+        <Popconfirm
+          title="If you proceed, the existing data for the same reporting year will be replaced. Are you certain you want to continue?"
+          onConfirm={handleSubmit}
+          okText="Yes"
+          cancelText="No"
+          disabled={!valid}
+        >
+          <Button type="primary" disabled={!valid} className={classes.button}>
+            Submit
+          </Button>
+        </Popconfirm>
+      )}
     </div>
   );
   return (
-    <Card title='UPLOAD DATA IMPORT TEMPLATE' footer={footer}>
+    <Card title="UPLOAD DATA IMPORT TEMPLATE" footer={footer}>
       {alert && <Notification {...alert} />}
 
       <div className={classes.uploadSection}>
@@ -277,7 +281,7 @@ export default function UploadTemplate({
         {mutationLoading && <Loader />}
         {!mutationLoading && data && errors.length === 1 && (
           <Sheet
-            id='Data'
+            id="Data"
             sourceData={data}
             readOnly={true}
             displayData={displayData}
@@ -288,19 +292,19 @@ export default function UploadTemplate({
             cellStyle={(x, y) => {
               if (x === 0 && y > 1) {
                 return {
-                  backgroundColor: 'rgba(2, 102, 185,0.1)',
+                  backgroundColor: "rgba(2, 102, 185,0.1)",
                 };
               }
               if (y == 0) {
                 return {
-                  backgroundColor: '#012f6c',
-                  color: 'white',
+                  backgroundColor: "#012f6c",
+                  color: "white",
                 };
               }
               if (y == 1) {
                 return {
-                  backgroundColor: '#0266B9',
-                  color: 'white',
+                  backgroundColor: "#0266B9",
+                  color: "white",
                 };
               }
 
@@ -310,7 +314,7 @@ export default function UploadTemplate({
         )}
         {errors.length > 1 && (
           <Sheet
-            id='Errors'
+            id="Errors"
             sourceData={errors}
             readOnly={true}
             displayData={displayErrors}
@@ -318,8 +322,8 @@ export default function UploadTemplate({
             cellStyle={(x, y) => {
               if (y == 0) {
                 return {
-                  backgroundColor: '#BB0C2F',
-                  color: 'white',
+                  backgroundColor: "#BB0C2F",
+                  color: "white",
                 };
               }
 
@@ -327,14 +331,14 @@ export default function UploadTemplate({
                 errors &&
                 errors.length > 0 &&
                 errors
-                  .map(row => row[x])
+                  .map((row) => row[x])
                   .reduce((a, b) => (a?.length > b?.length ? a : b));
 
               const width = longest?.length * 8 + 20;
 
               return {
-                color: '#BB0C2F',
-                whiteSpace: 'pre-wrap',
+                color: "#BB0C2F",
+                whiteSpace: "pre-wrap",
                 wrapText: true,
                 width,
               };
