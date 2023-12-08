@@ -1,49 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import Card from '../components/Card';
-import { Transfer, SingleSelectField, SingleSelectOption } from '@dhis2/ui';
-import { createUseStyles } from 'react-jss';
-import { Button, Form, Table, Popconfirm } from 'antd';
-import { useDataMutation } from '@dhis2/app-runtime';
-import localIndicators from '../data/indicators.json';
-import { getIndicators } from '../lib/gho';
-import Notification from '../components/Notification';
+import React, { useState, useEffect } from "react";
+import Card from "../components/Card";
+import { Transfer, SingleSelectField, SingleSelectOption } from "@dhis2/ui";
+import { createUseStyles } from "react-jss";
+import { Button, Form, Table, Popconfirm } from "antd";
+import { useDataMutation } from "@dhis2/app-runtime";
+import localIndicators from "../data/indicators.json";
+import { getIndicators } from "../lib/gho";
+import Notification from "../components/Notification";
 
 const useStyles = createUseStyles({
-  '@global': {
-    '.dhis2-uicore-transfer': {
-      '& div.jsx-3958825765': {
-        width: 'calc(50% - 16%) !important',
+  "@global": {
+    ".dhis2-uicore-transfer": {
+      "& div.jsx-3958825765": {
+        width: "calc(50% - 16%) !important",
       },
     },
   },
   transfer: {
-    '& button.icon-only': {
-      background: '#012f6c !important',
-      color: '#fff !important',
-      '& span, svg': {
-        color: '#fff !important',
-        fill: '#fff !important',
+    "& button.icon-only": {
+      background: "#012f6c !important",
+      color: "#fff !important",
+      "& span, svg": {
+        color: "#fff !important",
+        fill: "#fff !important",
       },
     },
-    '& div.highlighted': {
-      background: '#bb0c2f !important',
+    "& div.highlighted": {
+      background: "#bb0c2f !important",
     },
   },
   footer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    width: '100%',
+    display: "flex",
+    justifyContent: "flex-end",
+    width: "100%",
   },
   select: {
     marginBottom: 10,
-    width: '30rem',
+    width: "30rem",
   },
   table: {
-    '& .ant-table-thead': {
-      '& tr': {
-        '& th': {
-          backgroundColor: '#012f6c !important',
-          color: 'white',
+    "& .ant-table-thead": {
+      "& tr": {
+        "& th": {
+          backgroundColor: "#012f6c !important",
+          color: "white",
         },
       },
     },
@@ -64,9 +64,9 @@ export default function GHO({ data: { orgUnits } }) {
   const [form] = Form.useForm();
 
   const mutation = {
-    resource: 'dataValueSets',
-    type: 'create',
-    data: _data => {
+    resource: "dataValueSets",
+    type: "create",
+    data: (_data) => {
       return { dataValues: Object.values(_data) };
     },
   };
@@ -74,10 +74,15 @@ export default function GHO({ data: { orgUnits } }) {
   const [mutate, { loading: mutationLoading, error: mutationError }] =
     useDataMutation(mutation, {
       onComplete: ({ data }) => {
-        setSuccess('Data imported successfully');
+        setSuccess("Data imported successfully");
         setSelected([]);
         setCountry(null);
         form.resetFields();
+        const timeout = setTimeout(() => {
+          setSuccess(null);
+        }, 3000);
+
+        return () => clearTimeout(timeout);
       },
     });
 
@@ -85,16 +90,16 @@ export default function GHO({ data: { orgUnits } }) {
     setSelected(selected);
   };
 
-  const handleChange = value => {
+  const handleChange = (value) => {
     setCountry(value);
   };
 
-  const getIndicatorId = value => {
+  const getIndicatorId = (value) => {
     const indicator = localIndicators.find(({ value: v }) => v === value);
     return indicator?.id;
   };
 
-  const handleImport = async values => {
+  const handleImport = async (values) => {
     try {
       setLoading(true);
       const indicators = await getIndicators(
@@ -103,12 +108,12 @@ export default function GHO({ data: { orgUnits } }) {
       );
 
       const orgUnit = orgUnits?.organisationUnits?.find(
-        ({ code }) => code === values.country.selected || 'UGA'
+        ({ code }) => code === values.country.selected || "UGA"
       )?.id;
 
       const formattedData = indicators.map((indicator, i) => {
         const { value } = indicator;
-        return value.map(v => {
+        return value.map((v) => {
           return {
             period: v.TimeDim,
             orgUnit,
@@ -153,49 +158,49 @@ export default function GHO({ data: { orgUnits } }) {
 
   const columns = [
     {
-      title: 'Indicator',
-      dataIndex: 'dataElement',
-      key: 'dataElement',
-      render: dataElement => {
+      title: "Indicator",
+      dataIndex: "dataElement",
+      key: "dataElement",
+      render: (dataElement) => {
         return (
-          localIndicators.find(({ id }) => id === dataElement)?.label || ''
+          localIndicators.find(({ id }) => id === dataElement)?.label || ""
         );
       },
     },
     {
-      title: 'Country',
-      dataIndex: 'orgUnit',
-      key: 'orgUnit',
-      render: _orgUnit => {
+      title: "Country",
+      dataIndex: "orgUnit",
+      key: "orgUnit",
+      render: (_orgUnit) => {
         return selecttedCountry;
       },
     },
     {
-      title: 'Period',
-      dataIndex: 'period',
-      key: 'period',
+      title: "Period",
+      dataIndex: "period",
+      key: "period",
     },
     {
-      title: 'Value',
-      dataIndex: 'value',
-      key: 'value',
+      title: "Value",
+      dataIndex: "value",
+      key: "value",
     },
   ];
 
   return (
     <Card
-      title='GLOBAL HEALTH OBSERVATORY'
+      title="GLOBAL HEALTH OBSERVATORY"
       footer={
         <div className={classes.footer}>
           <Popconfirm
-            title='This action will overwrite existing data. Do you want to continue?'
+            title="This action will overwrite existing data. Do you want to continue?"
             onConfirm={() => {
               form.submit();
             }}
-            okText='Yes'
-            cancelText='No'
+            okText="Yes"
+            cancelText="No"
           >
-            <Button type='primary' loading={mutationLoading || loading}>
+            <Button type="primary" loading={mutationLoading || loading}>
               Import
             </Button>
           </Popconfirm>
@@ -206,39 +211,39 @@ export default function GHO({ data: { orgUnits } }) {
         <>
           {error && (
             <Notification
-              title='Error'
+              title="Error"
               message={error}
-              status='error'
+              status="error"
               onClose={() => setError(null)}
             />
           )}
           {success && (
             <Notification
-              title='Success'
+              title="Success"
               message={success}
-              status='success'
+              status="success"
               onClose={() => setSuccess(null)}
             />
           )}
-          <Form form={form} layout='vertical' onFinish={handleImport}>
+          <Form form={form} layout="vertical" onFinish={handleImport}>
             <Form.Item
-              label='Country'
-              name='country'
+              label="Country"
+              name="country"
               rules={[
                 {
                   required: true,
-                  message: 'Please select a country',
+                  message: "Please select a country",
                 },
               ]}
             >
               <SingleSelectField
                 className={classes.select}
                 filterable
-                noMatchText='No match found'
+                noMatchText="No match found"
                 onChange={({ selected }) => {
                   setCountry(selected);
                 }}
-                placeholder='Select a country'
+                placeholder="Select a country"
                 selected={country}
               >
                 {orgUnits?.organisationUnits?.map(({ code, name }) => (
@@ -254,19 +259,19 @@ export default function GHO({ data: { orgUnits } }) {
                   corresponding indicators.
                 </p>
                 <Form.Item
-                  label='Indicators'
-                  name='indicators'
+                  label="Indicators"
+                  name="indicators"
                   rules={[
                     {
                       required: true,
-                      message: 'Please select at least one indicator',
+                      message: "Please select at least one indicator",
                     },
                     {
                       validator: (_, value) =>
                         value?.selected?.length > 0
                           ? Promise.resolve()
                           : Promise.reject(
-                              new Error('Please select at least one indicator')
+                              new Error("Please select at least one indicator")
                             ),
                     },
                   ]}
@@ -288,8 +293,8 @@ export default function GHO({ data: { orgUnits } }) {
           columns={columns}
           dataSource={importedData}
           pagination={importedData?.length > 25 ? { pageSize: 25 } : false}
-          size='small'
-          style={{ marginBottom: '5rem' }}
+          size="small"
+          style={{ marginBottom: "5rem" }}
           className={classes.table}
         />
       )}
